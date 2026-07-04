@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我 · 星辰笔记</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #f5f7fb;
+            --surface: #ffffff;
+            --text: #162033;
+            --text-muted: #64748b;
+            --accent: #2563eb;
+            --accent-soft: #dbeafe;
+            --rose: #f43f5e;
+            --teal: #14b8a6;
+            --gold: #f59e0b;
+            --border: #e2e8f0;
+            --shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+            --shadow-hover: 0 22px 56px rgba(15, 23, 42, 0.14);
+            --radius: 18px;
+            --transition: 0.22s ease;
+            --font: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+            --max-width: 1100px;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font);
+            background:
+                linear-gradient(180deg, rgba(219,234,254,0.85) 0, rgba(245,247,251,0) 420px),
+                var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        a { color: var(--accent); text-decoration: none; transition: color var(--transition); }
+        a:hover { color: #1e40af; }
+
+        header {
+            background: rgba(255,255,255,0.82);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(18px);
+            box-shadow: 0 8px 28px rgba(15, 23, 42, 0.04);
+        }
+        .nav-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            height: 64px;
+        }
+        .logo {
+            font-size: 1.24rem;
+            font-weight: 800;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent), var(--teal));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.2rem;
+            box-shadow: 0 10px 26px rgba(37, 99, 235, 0.24);
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 4px;
+        }
+        .nav-links a {
+            padding: 8px 16px;
+            border-radius: 999px;
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all var(--transition);
+        }
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 36px 24px;
+        }
+        .about-hero {
+            min-height: 300px;
+            background:
+                linear-gradient(115deg, rgba(15,23,42,0.96) 0%, rgba(30,64,175,0.88) 55%, rgba(20,184,166,0.76) 100%),
+                repeating-linear-gradient(135deg, rgba(255,255,255,0.1) 0 1px, transparent 1px 18px),
+                linear-gradient(25deg, transparent 0 62%, rgba(245,158,11,0.42) 62% 72%, transparent 72%),
+                linear-gradient(135deg, #0f172a, #1d4ed8 52%, #14b8a6);
+            border-radius: var(--radius);
+            padding: 44px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 28px 70px rgba(15, 23, 42, 0.2);
+        }
+        .about-hero::after {
+            content: '';
+            position: absolute;
+            right: 38px;
+            bottom: 36px;
+            width: 170px;
+            height: 118px;
+            border: 1px solid rgba(255,255,255,0.22);
+            border-radius: 22px;
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(12px);
+        }
+        .hero-tag {
+            display: inline-block;
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.24);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+        .about-hero h1 {
+            font-size: 2.4rem;
+            line-height: 1.2;
+            max-width: 680px;
+            margin-bottom: 14px;
+            position: relative;
+            z-index: 1;
+        }
+        .about-hero p {
+            max-width: 620px;
+            color: rgba(255,255,255,0.9);
+            position: relative;
+            z-index: 1;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 24px;
+            position: relative;
+            z-index: 1;
+        }
+        .btn {
+            display: inline-block;
+            background: #fff;
+            color: var(--accent);
+            padding: 11px 22px;
+            border-radius: 999px;
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+        .btn.secondary {
+            background: rgba(255,255,255,0.14);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.24);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 330px;
+            gap: 32px;
+            margin-top: 32px;
+            align-items: start;
+        }
+        .panel {
+            background: rgba(255,255,255,0.92);
+            border: 1px solid rgba(226,232,240,0.9);
+            border-radius: var(--radius);
+            padding: 28px;
+            box-shadow: var(--shadow);
+        }
+        .panel h2,
+        .panel h3 {
+            font-size: 1.16rem;
+            margin-bottom: 14px;
+        }
+        .panel p {
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+        .profile-card {
+            position: sticky;
+            top: 88px;
+        }
+        .avatar {
+            width: 96px;
+            height: 96px;
+            border-radius: 28px;
+            background:
+                linear-gradient(135deg, rgba(255,255,255,0.28), rgba(255,255,255,0)),
+                linear-gradient(135deg, var(--accent), var(--rose));
+            box-shadow: inset 0 0 0 5px rgba(255,255,255,0.65), 0 16px 36px rgba(37,99,235,0.24);
+            margin-bottom: 16px;
+        }
+        .profile-name {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        .profile-role {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            margin-bottom: 18px;
+        }
+        .meta-list {
+            list-style: none;
+            display: grid;
+            gap: 10px;
+        }
+        .meta-list li {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .meta-list li:last-child { border-bottom: none; padding-bottom: 0; }
+        .meta-list strong { color: var(--text); }
+
+        .skill-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 16px;
+        }
+        .skill-item {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            background: #fff;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+        .skill-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+        .skill-item strong {
+            display: block;
+            margin-bottom: 6px;
+        }
+        .skill-item span {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .timeline {
+            display: grid;
+            gap: 16px;
+            margin-top: 16px;
+        }
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 86px 1fr;
+            gap: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        .timeline-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .timeline-date {
+            color: var(--accent);
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+        .timeline-title {
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        .timeline-text {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+        }
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 14px;
+        }
+        .tag {
+            display: inline-block;
+            background: var(--accent-soft);
+            color: var(--accent);
+            padding: 3px 12px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        footer {
+            background: #101827;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            padding: 32px 24px;
+            color: #cbd5e1;
+            font-size: 0.85rem;
+            margin-top: 40px;
+        }
+        footer a { color: #93c5fd; }
+
+        @media (max-width: 768px) {
+            .container { padding: 24px 16px; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                right: 0;
+                background: rgba(255,255,255,0.96);
+                flex-direction: column;
+                padding: 12px;
+                border-bottom: 1px solid var(--border);
+                box-shadow: var(--shadow);
+            }
+            .nav-links.open { display: flex; }
+            .nav-toggle { display: block; }
+            .about-hero { padding: 32px 24px; min-height: 280px; }
+            .about-hero::after { display: none; }
+            .about-hero h1 { font-size: 1.65rem; }
+            .about-grid { grid-template-columns: 1fr; }
+            .profile-card { position: static; }
+            .skill-list { grid-template-columns: 1fr; }
+            .timeline-item { grid-template-columns: 1fr; gap: 6px; }
+        }
+
+        @media (max-width: 480px) {
+            .nav-inner { padding: 0 16px; }
+            .logo { font-size: 1.1rem; }
+            .hero-actions { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="nav-inner">
+        <a href="blog.html" class="logo">
+            <span class="logo-icon">✦</span>
+            星辰笔记
+        </a>
+        <button class="nav-toggle" id="navToggle" aria-label="菜单">☰</button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="blog.html">首页</a></li>
+            <li><a href="#">技术</a></li>
+            <li><a href="#">生活</a></li>
+            <li><a href="#">随笔</a></li>
+            <li><a href="about.html" class="active">关于</a></li>
+        </ul>
+    </div>
+</header>
+
+<main class="container">
+    <section class="about-hero">
+        <span class="hero-tag">关于我</span>
+        <h1>你好，我是林星辰，一个持续记录成长的全栈学习者。</h1>
+        <p>我喜欢把项目实践、技术踩坑和阅读思考整理成文章。这个博客既是我的学习档案，也是我练习表达、复盘和沉淀知识的地方。</p>
+        <div class="hero-actions">
+            <a class="btn" href="blog.html">返回首页 →</a>
+            <a class="btn secondary" href="mailto:hello@example.com">联系我</a>
+        </div>
+    </section>
+
+    <section class="about-grid">
+        <div>
+            <article class="panel">
+                <h2>我的方向</h2>
+                <p>目前重点关注前端工程化、TypeScript、React、Node.js 和自动化部署。我希望能把每一次课程设计、实验项目和个人练习都做成能展示、能复盘、能迭代的作品。</p>
+                <p>写博客对我来说不是简单记录代码，而是把“为什么这样做”“遇到了什么问题”“最后如何解决”讲清楚。这样的积累会让项目更完整，也能让实验报告更有说服力。</p>
+                <div class="tag-cloud">
+                    <span class="tag">前端开发</span>
+                    <span class="tag">Node.js</span>
+                    <span class="tag">TypeScript</span>
+                    <span class="tag">GitHub</span>
+                    <span class="tag">实验报告</span>
+                </div>
+            </article>
+
+            <article class="panel" style="margin-top:24px;">
+                <h2>技能栈</h2>
+                <div class="skill-list">
+                    <div class="skill-item">
+                        <strong>前端界面</strong>
+                        <span>HTML、CSS、JavaScript、响应式页面和交互效果。</span>
+                    </div>
+                    <div class="skill-item">
+                        <strong>工程实践</strong>
+                        <span>Git 版本管理、GitHub 上传、README 和项目文档整理。</span>
+                    </div>
+                    <div class="skill-item">
+                        <strong>后端基础</strong>
+                        <span>Node.js、Python、接口设计和基础数据处理。</span>
+                    </div>
+                    <div class="skill-item">
+                        <strong>学习复盘</strong>
+                        <span>核心代码解释、实验截图整理和报告结构优化。</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="panel" style="margin-top:24px;">
+                <h2>成长记录</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">2024</div>
+                        <div>
+                            <div class="timeline-title">开始系统整理技术笔记</div>
+                            <div class="timeline-text">把课程实验、项目练习和遇到的问题按主题归档，形成可复用的学习资料。</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2025</div>
+                        <div>
+                            <div class="timeline-title">完善个人博客与项目展示</div>
+                            <div class="timeline-text">使用静态页面展示文章、分类和个人信息，让作品有更清晰的入口。</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">目标</div>
+                        <div>
+                            <div class="timeline-title">把每个项目都做成完整作品</div>
+                            <div class="timeline-text">包含 README、核心代码注释、运行截图和实验报告说明，提升项目表达质量。</div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <aside class="panel profile-card">
+            <div class="avatar"></div>
+            <div class="profile-name">林星辰</div>
+            <div class="profile-role">软件工程学生 / 全栈方向学习者</div>
+            <ul class="meta-list">
+                <li><span>关注方向</span><strong>Web 全栈</strong></li>
+                <li><span>当前目标</span><strong>高质量项目文档</strong></li>
+                <li><span>博客主题</span><strong>技术与复盘</strong></li>
+                <li><span>常用工具</span><strong>GitHub</strong></li>
+            </ul>
+        </aside>
+    </section>
+</main>
+
+<footer>
+    <p>© 2024 星辰笔记 · 用 ❤️ 和代码构建 · <a href="blog.html">返回首页</a></p>
+</footer>
+
+<script>
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    navToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('open');
+        });
+    });
+</script>
+</body>
+</html>
